@@ -1,0 +1,80 @@
+import pandas as pd
+import math
+import random
+import numpy as np
+
+x=np.array([[1,1],[1.5,2],[3,4],[5,7],[3.5,5],[4.5,5],[3.5,4.5]])
+flag=0
+def dist(x1, x2):
+    x = (x1[0]-x2[0])**2
+    y=(x1[1]-x2[1])**2
+    s = math.sqrt(x+y)
+    return s
+
+m1 = x[6]
+m2 = x[4]
+store1 = []
+store2 = []
+c1=[]
+c2=[]
+def callist(store1, store2, x, m1, m2):
+    for i in x:
+        store1.append(dist(i,m1))
+        store2.append(dist(i,m2))
+        
+def meann(x, c1):
+    sumx=0
+    sumy=0
+    arr=[]
+    for i in range(0,len(c1)):
+
+        sumx += x[c1][i][0]
+        sumy += x[c1][i][1]
+    m=i+1 
+    arr.append(sumx/m)
+    arr.append(sumy/m)
+    return arr
+
+def comp(store1, store2, c1, c2):
+   
+    for i in range(0,7):
+        a = store1[i]
+        b = store2[i]
+        if a<b:
+            c1.append(i)
+        else:
+            c2.append(i)
+    
+#    print(c1)
+#    print(c2)
+
+#def mainn(x, m1, m2, flag):
+while flag!=1:
+    callist(store1, store2, x, m1, m2)
+    comp(store1, store2, c1, c2)
+    ar1 = meann(x, c1)
+    ar2 = meann(x, c2)
+    store1.clear()
+    store2.clear()
+    c1.clear()
+    c2.clear()
+    callist(store1, store2, x, ar1, ar2)
+    comp(store1, store2, c1, c2)
+    n1 = meann(x, c1)
+    n2 = meann(x, c2)
+         
+    if n1==ar1 and n2==ar2:
+        flag=1
+        print("Success")
+        print("cluster 1 is",c1)
+        print("cluster 2 is",c2)
+        break
+
+    else:
+        flag=0
+        print("cluster 1 is",c1)
+        print("cluster 2 is",c2)
+        print("again")
+        
+    m1=n1
+    m2=n2
