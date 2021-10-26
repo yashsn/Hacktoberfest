@@ -1,0 +1,27 @@
+from scipy.io import arff as ar
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn import svm
+from sklearn.svm import SVC
+from sklearn import metrics
+#from keras.models import Model
+
+from sklearn.metrics import accuracy_score
+f=open('/home/administrator/Downloads/iris.arff')
+arff_d=ar.loadarff(f)
+for r in arff_d:
+    print(r)
+
+hh=pd.DataFrame(arff_d[0]);
+hh.head();
+y=hh['class']
+X=hh.drop('class',axis=1)
+v=list(y)
+x_train,x_test,y_train,y_test=train_test_split(X,v,test_size=0.2)
+clf= svm.SVC(kernel='linear')
+#print(y_train)
+clf.fit(x_train,y_train)
+op=clf.predict(x_test)
+#print(op)
+conf=clf.score(x_test,y_test)
+print(conf)
