@@ -1,0 +1,19 @@
+import numpy as np
+from apyori import apriori
+import pandas as pd
+df1=pd.read_csv('/home/administrator/Downloads/store_data.csv',header=None)
+#print(df1)
+print(df1.shape)
+
+#rec=[]
+#for i in range (0,7501):
+#    for j in range (0,20):
+#        rec.append([str(df1.values[i,j])])
+rec = []
+for i in range(0, 7501):
+    rec.append([str(df1.values[i,j]) for j in range(0, 20)])     
+print(rec)
+assn_rule=apriori(rec,min_support=0.0045,min_confidence=0.2,min_lift=3,min_length=2)
+assn_res=list(assn_rule)
+print(assn_res[0])
+print(len(assn_res))
